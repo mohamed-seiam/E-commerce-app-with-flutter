@@ -1,12 +1,15 @@
-// ignore_for_file: prefer_const_constructors_in_immutables, must_be_immutable, non_constant_identifier_names, prefer_const_constructors, body_might_complete_normally_nullable, prefer_const_literals_to_create_immutables, unnecessary_string_escapes
+// ignore_for_file: prefer_const_constructors_in_immutables, must_be_immutable, non_constant_identifier_names, prefer_const_constructors, body_might_complete_normally_nullable, prefer_const_literals_to_create_immutables, unnecessary_string_escapes, avoid_print, unused_import
 
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:test/layout/shop_layout.dart';
 import 'package:test/modules/login/login_cubit/cubit.dart';
 import 'package:test/modules/login/login_cubit/states.dart';
 import 'package:test/modules/reagister_screen/shopreagister_screen.dart';
 import 'package:test/shared/components/component.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:test/shared/network/local/cachhelper.dart';
 
 class ShopLogin extends StatelessWidget {
   var EmailController = TextEditingController();
@@ -19,7 +22,31 @@ class ShopLogin extends StatelessWidget {
     return BlocProvider(
       create: (BuildContext context) => ShopLoginCubit(),
       child: BlocConsumer<ShopLoginCubit, ShoploginState>(
-        listener: (BuildContext context, state) {},
+        //listen on validation of login
+        listener: (BuildContext context, state) {
+          if (state is ShoploginSuccessState) {
+            //check on statues not statue code
+            //if login success
+            if (state.loginModel.status!) {
+              //usable component for toast
+              showToast(
+                  text: state.loginModel.message!, state: Toaststate.SUCCESS);
+              cacheHelper
+                  .saveData(key: "token", value: state.loginModel.data?.token)
+                  .then((value) => navigateAndFinish(
+                        context,
+                        ShopLayout(),
+                      ));
+            } else {
+              //if login failed
+              showToast(
+                text: state.loginModel.message!,
+                state: Toaststate.ERROR,
+              );
+            }
+          }
+        },
+        //block builder
         builder: (BuildContext context, state) {
           return Scaffold(
             appBar: AppBar(),
@@ -70,18 +97,17 @@ class ShopLogin extends StatelessWidget {
                           controller: PasswordController,
                           type: TextInputType.visiblePassword,
                           suffix: ShopLoginCubit.get(context).suffix,
-                          ispassword:ShopLoginCubit.get(context).isPassword,
-                          suffixpress: () => 
-                          {
-                            ShopLoginCubit.get(context).ChangePassowrdVisibality(),
+                          ispassword: ShopLoginCubit.get(context).isPassword,
+                          suffixpress: () => {
+                            ShopLoginCubit.get(context)
+                                .ChangePassowrdVisibality(),
                           },
-                          onSubmit: (value)
-                          {
+                          onSubmit: (value) {
                             if (formKey.currentState!.validate()) {
-                                  ShopLoginCubit.get(context).userloin(
-                                      email: EmailController.text,
-                                      password: PasswordController.text);
-                                }
+                              ShopLoginCubit.get(context).userloin(
+                                  email: EmailController.text,
+                                  password: PasswordController.text);
+                            }
                           },
                           validate: (String? value) {
                             if (value!.isEmpty) {

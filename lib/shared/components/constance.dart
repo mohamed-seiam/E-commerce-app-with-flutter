@@ -1,15 +1,19 @@
-// ignore_for_file: avoid_print, non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names
+import '../../modules/login/shop_login.dart';
+import 'component.dart';
+import 'package:test/shared/network/local/cachhelper.dart';
 
-// import 'package:market/modules/login_screen/LoginShopScreen.dart';
-// import 'package:market/shared/Components/components.dart';
-// import 'package:market/shared/network/local/Cache_helper.dart';
-//         void singOut(context){
-//              cacheHelper.removeData(key: 'token').then((value) {
-//                 if(value){
-//                     navigateAndFinish(context, ShopLogin());
-//                 }
-//               });
-// }
+void signOut(context)
+{
+  cacheHelper.removeData(key: "token")
+      .then((value)
+  {
+    if (value)
+    {
+      navigateAndFinish(context, ShopLogin(),);
+    }
+  });
+}
 
 void printFullText(String text)
 {
@@ -17,4 +21,4 @@ void printFullText(String text)
   Pattern.allMatches(text).forEach((match)=>print(match.group(0)));
 }
 
-String token='';
+String? token='';
