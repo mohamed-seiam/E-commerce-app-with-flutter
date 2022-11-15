@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors_in_immutables, must_be_immutable, non_constant_identifier_names, prefer_const_constructors, body_might_complete_normally_nullable, prefer_const_literals_to_create_immutables, unnecessary_string_escapes, avoid_print, unused_import
 
-import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:conditional_builder/conditional_builder.dart';
+// import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:test/layout/shop_layout.dart';
@@ -9,6 +10,7 @@ import 'package:test/modules/login/login_cubit/states.dart';
 import 'package:test/modules/reagister_screen/shopreagister_screen.dart';
 import 'package:test/shared/components/component.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:test/shared/components/constance.dart';
 import 'package:test/shared/network/local/cachhelper.dart';
 
 class ShopLogin extends StatelessWidget {
@@ -33,10 +35,12 @@ class ShopLogin extends StatelessWidget {
                   text: state.loginModel.message!, state: Toaststate.SUCCESS);
               cacheHelper
                   .saveData(key: "token", value: state.loginModel.data?.token)
-                  .then((value) => navigateAndFinish(
+                  .then((value){
+                    token = state.loginModel.data?.token;
+                    navigateAndFinish(
                         context,
                         ShopLayout(),
-                      ));
+                );});
             } else {
               //if login failed
               showToast(
@@ -96,8 +100,8 @@ class ShopLogin extends StatelessWidget {
                         defultFormField(
                           controller: PasswordController,
                           type: TextInputType.visiblePassword,
-                          suffix: ShopLoginCubit.get(context).suffix,
                           ispassword: ShopLoginCubit.get(context).isPassword,
+                          suffix: ShopLoginCubit.get(context).isPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined,
                           suffixpress: () => {
                             ShopLoginCubit.get(context)
                                 .ChangePassowrdVisibality(),

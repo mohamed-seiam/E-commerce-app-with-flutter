@@ -1,13 +1,13 @@
-import 'dart:convert';
+
 
 class CategoriesModel
-{
+ {
   bool? status;
   CategoriesDataModel? data;
 
   CategoriesModel.fromjson(Map<String , dynamic>json)
   {
-      status = json['data'];
+      status = json['status'];
       data = CategoriesDataModel.fromjson(json['data']);
   }
 }
@@ -15,20 +15,21 @@ class CategoriesModel
 class CategoriesDataModel
 {
     int? currentpage;
-    List<DataModel>? data = [];
+    List<DataModel> data = [];
     CategoriesDataModel.fromjson(Map<String , dynamic>json)
     {
       currentpage = json['current_page'];
-      json['dat'].forEach((element)
+
+      json['data'].forEach((element)
       {
-        data!.add(DataModel.fromjson(json['data']));
+        data.add(DataModel.fromjson(element));
       });
     }
 }
 
 class DataModel
 {
-  int? id;
+  dynamic id;
   String? name;
   String? image;
 

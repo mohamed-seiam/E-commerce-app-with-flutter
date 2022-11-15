@@ -6,33 +6,38 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test/models/login_model.dart';
 import 'package:test/modules/login/login_cubit/states.dart';
+import 'package:test/modules/reagister_screen/register_cubit/states.dart';
 import 'package:test/shared/network/endpoint.dart';
 import 'package:test/shared/network/remote/diohelper.dart';
 
-class ShopLoginCubit extends Cubit<ShoploginState> {
-  ShopLoginCubit() : super(ShoploginInitialState());
+class ShopRegisterCubit extends Cubit<ShopregisterState> {
+  ShopRegisterCubit() : super(ShopregisterInitialState());
 
-  static ShopLoginCubit get(context) => BlocProvider.of(context);
+  static ShopRegisterCubit get(context) => BlocProvider.of(context);
 
   ShopLoginModel? loginModel;
 
-  void userloin({
-    required String email,
-    required String password,
+  void userregister({
+    required String ?email,
+    required String ?password,
+    required String ?name,
+    required String ?phone,
   }) {
-    emit(ShoploginLoadingState());
+    emit(ShopregisterLoadingState());
     DioHelper.postData(
-      url: login,
+      url: Register,
       data: {
+        'name':name,
         "email": email,
         "password": password,
+        'phone':phone,
       },
     ).then((value) {
       print(value.data);
       loginModel = ShopLoginModel.fromJson(value.data);
-      emit(ShoploginSuccessState(loginModel!));
+      emit(ShopregisterSuccessState(loginModel!));
     }).catchError((error) {
-      emit(ShoploginErrorState(error.toString()));
+      emit(ShopregisterErrorState(error.toString()));
     });
   }
 
@@ -44,6 +49,6 @@ class ShopLoginCubit extends Cubit<ShoploginState> {
     // suffix =
     //     isPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
 
-    emit(ShopChangePasswordVisibalityState());
+    emit(ShopRegisterPasswordVisibalityState());
   }
 }

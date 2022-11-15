@@ -24,6 +24,7 @@ void main() async {
 
   bool ?onBoarding = cacheHelper.getData(key: "onBoarding");
   String ? token = cacheHelper.getData(key: "token");
+  print(token);
   if (onBoarding != null) {
     if (token != null) {
       widget = ShopLayout();
@@ -46,7 +47,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => ShopCubit()..getHomeData(),
+      create: (BuildContext context) => ShopCubit()..getHomeData()..getCategoriesData()..getFavoritesData()..getUserData()..getCartsData()..GetOrders(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Shop App',

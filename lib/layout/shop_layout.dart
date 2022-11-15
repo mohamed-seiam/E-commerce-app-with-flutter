@@ -56,6 +56,13 @@ class ShopLayout extends StatelessWidget {
                   label: "Favorites",
 
                 ),
+
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.shopping_cart,),
+                  label: "Cart",
+
+                ),
+
                 BottomNavigationBarItem(
                   icon: Icon(Icons.settings,),
                   label: "Settings",
