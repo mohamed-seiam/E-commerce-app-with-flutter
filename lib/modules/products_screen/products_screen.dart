@@ -130,7 +130,7 @@ class ProductsScreen extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: (){
-              navigateTo(context, ProductDetailsScreen(model,index));
+              navigateTo(context, ProductDetailsScreen(index));
             },
             child: Stack(
               alignment: AlignmentDirectional.bottomStart,

@@ -51,6 +51,7 @@ class ProductsModel
   dynamic discount;
   String? image;
   String? name;
+  String? description;
   bool? inFavorites;
   bool? inCart;
   int ? quantity=0;
@@ -64,5 +65,6 @@ class ProductsModel
       inCart = json['in_cart'];
       name = json['name'];
       image = json['image'];
+      description=json['description'];
   }
 }
