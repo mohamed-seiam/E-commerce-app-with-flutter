@@ -213,13 +213,16 @@ class ShopCubit extends Cubit<ShopStates>
     DioHelper.getData(url: Profile,token: token ).then((value)
     {
       userModel  = ShopLoginModel.fromJson(value.data);
-       print(userModel!.data!.name);
+       // print(userModel!.data!.name);
 
       emit(ShopSuccessGetUserDataState(userModel!));
-    }).catchError((error)
+    })
+        .catchError((error)
     {
+      print(error.toString());
       emit(ShopErrorGetUserDataState());
-    });
+    })
+    ;
   }
 
   void UpdateUserData({
@@ -271,8 +274,8 @@ class ShopCubit extends Cubit<ShopStates>
     });
   }
 
-        GetOrderModel? getOrderModel;
-      void GetOrders()
+    GetOrderModel? getOrderModel;
+    void GetOrders()
       {
         emit(ShopLoadingGetOrderState());
         DioHelper.getData(
@@ -293,4 +296,10 @@ class ShopCubit extends Cubit<ShopStates>
         });
       }
 
+      double ? total=0;
+    void PlusCounter(ProductModel product)
+    {
+       product.quantity += 1;
+       emit(ShopChangeCounterState());
+    }
 }

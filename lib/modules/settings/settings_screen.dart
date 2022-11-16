@@ -1,10 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:conditional_builder/conditional_builder.dart';
-import 'package:flutter/material.dart';
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test/cubit/cubit.dart';
 import 'package:test/cubit/states.dart';
+import 'package:test/modules/Myorder_screen/MyOrder_Screen.dart';
 import 'package:test/shared/components/component.dart';
 import 'package:test/shared/components/constance.dart';
 
@@ -24,11 +24,11 @@ class SettingsScreen extends StatelessWidget
       },
       builder: (context,state){
         var model = ShopCubit.get(context).userModel;
-          if(model!.data!=null)
+          if(model!=null && model.data!=null)
           {
-            nameController.text =  model!.data!.name!;
-            emilController.text =  model!.data!.email!;
-            phoneController.text =  model!.data!.phone!;
+            nameController.text =  model.data!.name!;
+            emilController.text =  model.data!.email!;
+            phoneController.text =  model.data!.phone!;
           }
 
 
@@ -111,6 +111,14 @@ class SettingsScreen extends StatelessWidget
 
                         },
                         text: "update",
+                      ),
+                      SizedBox(height: 30.0,),
+                      defultButton(
+                          function:()
+                          {
+                            navigateTo(context, MyOrederScreen(ShopCubit.get(context).getOrderModel));
+                          },
+                          text: 'My Orders',
                       )
                     ],
                   ),

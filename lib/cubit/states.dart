@@ -87,3 +87,5 @@ class ShopSuccessAddOrderState  extends ShopStates{
 }
 
 class ShopErrorAddOrderState  extends ShopStates{}
+
+class ShopChangeCounterState  extends ShopStates{}

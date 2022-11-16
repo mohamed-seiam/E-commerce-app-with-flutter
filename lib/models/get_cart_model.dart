@@ -38,19 +38,19 @@ class Data {
 class CartItems {
   int? id;
   int? quantity;
-  Product? product;
+  ProductModel? product;
 
   CartItems.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     quantity = json['quantity'];
     product =
-    json['product'] != null ? new Product.fromJson(json['product']) : null;
+    json['product'] != null ? new ProductModel.fromJson(json['product']) : null;
   }
 
 
 }
 
-class Product {
+class ProductModel {
   int? id;
   int? price;
   int? oldPrice;
@@ -61,10 +61,9 @@ class Product {
   List<String>? images;
   bool? inFavorites;
   bool? inCart;
-
-
-
-  Product.fromJson(Map<String, dynamic> json) {
+  int  quantity=1;
+  
+  ProductModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     price = json['price'];
     oldPrice = json['old_price'];

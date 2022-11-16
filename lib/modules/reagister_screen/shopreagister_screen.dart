@@ -1,7 +1,6 @@
 // ignore_for_file: body_might_complete_normally_nullable, prefer_const_constructors
 
-import 'package:conditional_builder/conditional_builder.dart';
-import 'package:flutter/material.dart';
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test/layout/shop_layout.dart';
 import 'package:test/modules/login/login_cubit/cubit.dart';

@@ -1,13 +1,13 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_const_constructors_in_immutables
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:conditional_builder/conditional_builder.dart';
-// import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';// import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test/cubit/cubit.dart';
 import 'package:test/cubit/states.dart';
 import 'package:test/models/categories_models.dart';
 import 'package:test/models/home_model.dart';
+import 'package:test/modules/Product_Details_Screen/product_details_screen.dart';
 import 'package:test/shared/components/component.dart';
 import 'package:test/shared/style/colors.dart';
 
@@ -46,7 +46,8 @@ class ProductsScreen extends StatelessWidget {
         CarouselSlider(
           items: model.data?.banners.map((e) =>
             Image(
-              image: NetworkImage('${e.image}'),
+              image: NetworkImage('${e.image}',),
+              errorBuilder: (context, error, stackTrace) => Icon(Icons.error),
               width: double.infinity,
               fit: BoxFit.cover,
             ),
@@ -115,39 +116,44 @@ class ProductsScreen extends StatelessWidget {
             crossAxisSpacing: 1.0,
             childAspectRatio: 1/1.57,
             children: List.generate(model.data!.products.length,
-                    (index) =>buildGridProduct(model.data!.products[index],context)),
+                    (index) =>buildGridProduct(model.data!.products[index],context,index)),
           ),
         ),
       ],
     ),
   );
 
-    Widget buildGridProduct(ProductsModel model,context) =>  Container(
+    Widget buildGridProduct(ProductsModel model,context,index) =>  Container(
       color: Colors.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Stack(
-            alignment: AlignmentDirectional.bottomStart,
-            children: [
-              Image(
-                image: NetworkImage(model.image.toString()),
-                width: double.infinity,
-                height: 200,
-              ),
-              if(model.discount != 0 )
-              Container(
-                color: Colors.red,
-                padding: EdgeInsets.symmetric(horizontal: 5.0),
-                child: Text(
-                  'DISCOUNT',
-                  style: TextStyle(
-                    fontSize: 10.0,
-                    color: Colors.white,
+          GestureDetector(
+            onTap: (){
+              navigateTo(context, ProductDetailsScreen(model,index));
+            },
+            child: Stack(
+              alignment: AlignmentDirectional.bottomStart,
+              children: [
+                Image(
+                  image: NetworkImage(model.image.toString()),
+                  width: double.infinity,
+                  height: 200,
+                ),
+                if(model.discount != 0 )
+                Container(
+                  color: Colors.red,
+                  padding: EdgeInsets.symmetric(horizontal: 5.0),
+                  child: Text(
+                    'DISCOUNT',
+                    style: TextStyle(
+                      fontSize: 10.0,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(12.0),

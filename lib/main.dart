@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, duplicate_ignore, unused_import, unused_local_variable, unnecessary_null_comparison
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,12 +15,21 @@ import 'package:test/shared/style/colors.dart';
 
 import 'cubit/cubit.dart';
 import 'modules/on_boarding_screen/on_boarding_screen.dart';
-
+class MyHttpOverrides extends HttpOverrides{
+  @override
+  HttpClient createHttpClient(SecurityContext? context){
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+  }
+}
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
   DioHelper.init();
   await cacheHelper.init();
+  HttpOverrides.global = MyHttpOverrides();
+
+
   // ignore: unused_local_variable
   Widget widget;
 

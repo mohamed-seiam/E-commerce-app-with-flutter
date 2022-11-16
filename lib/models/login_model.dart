@@ -14,13 +14,13 @@ class ShopLoginModel {
 }
 
 class UserData {
-  int?id;
+  int ? id;
   String?name;
   String? email;
   String? phone;
   String? image;
   int? points;
-  int? credit;
+  String? credit;
   String? token;
 
   // UserData({
@@ -43,7 +43,7 @@ class UserData {
     phone = json['phone'];
     image = json['image'];
     points = json['points'];
-    credit = json['credit'];
+    credit = json['credit'].toString();
     token = json['token'];
   }
 }
