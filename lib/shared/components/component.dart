@@ -7,7 +7,7 @@ import 'package:test/models/get_favourites_model.dart';
 import 'package:test/shared/style/colors.dart';
 
 //  component to go name widget screen and back
-void navigateTo(context, Widget) => Navigator.push(
+void navigateTo(context, Widget,) => Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => Widget,
@@ -152,6 +152,7 @@ Widget BuildListProduct( model,context,{bool isOldPrice = true}) => Padding(
               image: NetworkImage(model!.image.toString()),
               width: 120,
               height: 120,
+              errorBuilder: (context, error, stackTrace) => Icon(Icons.error),
             ),
             if(model!.discount != 0 && isOldPrice )
               Container(

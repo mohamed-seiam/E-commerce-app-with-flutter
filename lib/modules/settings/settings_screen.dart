@@ -4,9 +4,10 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test/cubit/cubit.dart';
 import 'package:test/cubit/states.dart';
-import 'package:test/modules/Myorder_screen/MyOrder_Screen.dart';
+
 import 'package:test/shared/components/component.dart';
 import 'package:test/shared/components/constance.dart';
+import 'package:test/shared/network/local/cachhelper.dart';
 
 class SettingsScreen extends StatelessWidget
 {
@@ -19,9 +20,7 @@ class SettingsScreen extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ShopCubit,ShopStates>(
-      listener: (context,state){
-
-      },
+      listener: (context,state){},
       builder: (context,state){
         var model = ShopCubit.get(context).userModel;
           if(model!=null && model.data!=null)
@@ -113,13 +112,13 @@ class SettingsScreen extends StatelessWidget
                         text: "update",
                       ),
                       SizedBox(height: 30.0,),
-                      defultButton(
-                          function:()
-                          {
-                            navigateTo(context, MyOrederScreen(ShopCubit.get(context).getOrderModel));
-                          },
-                          text: 'My Orders',
-                      )
+                      // defultButton(
+                      //     function:()
+                      //     {
+                      //       navigateTo(context, MyOrederScreen(ShopCubit.get(context).getOrderModel));
+                      //     },
+                      //     text: 'My Orders',
+                      // )
                     ],
                   ),
                 ),

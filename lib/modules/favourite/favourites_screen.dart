@@ -28,18 +28,23 @@ class FavouritesScreen extends StatelessWidget {
             fallback: (context) => Center(child: CircularProgressIndicator()),
           ),
           fallback: (context)=>Center(
-            child: Column(
-              children: [
-                Text(
-                  "you Don\'t have add any Products To your Cart yet!",
-                ),
-                SizedBox(height: 30,),
-                Icon(
-                  Icons.heart_broken,
-                  size: 40.0,
-                  color: Colors.red,
-                ),
-              ],
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image(
+                      image:AssetImage('assets/img/windowshop.png'),
+                  ),
+                  SizedBox(height: 30,),
+                  Text(
+                    "you Don\'t have add any Products To your WishList yet!",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  
+                ],
+              ),
             ),
           ),
         );

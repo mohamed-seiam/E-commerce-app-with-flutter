@@ -48,8 +48,8 @@ class ShopCubit extends Cubit<ShopStates>
 
     HomeModel? homeModel;
 
-  Map<int ,bool> favorites = {};
-  Map<int ,bool> carts = {};
+  Map<int? ,bool?> favorites = {};
+  Map<int? ,bool?> carts = {};
 
   void getHomeData()
   {
@@ -58,7 +58,7 @@ class ShopCubit extends Cubit<ShopStates>
     {
       homeModel = HomeModel.fromjson(value.data);
 
-     homeModel!.data!.products.forEach((element)
+     homeModel!.data!.products?.forEach((element)
      {
        favorites.addAll({
          element.id : element.inFavorites!
@@ -105,9 +105,9 @@ class ShopCubit extends Cubit<ShopStates>
     });
   }
   ChangeFavoritesModel ? changeFavoritesModel;
-  void ChangeFavorites(int productId)
+  void ChangeFavorites(int ? productId)
   {
-    favorites[productId]  = !favorites[productId]!;
+    favorites[productId]  = !favorites[productId!]!;
     emit(ShopChangeFavoritesState());
       DioHelper.postData(
           url: Favorites,
@@ -286,7 +286,7 @@ class ShopCubit extends Cubit<ShopStates>
         {
             getOrderModel= GetOrderModel.fromJson(value.data);
             print(value.data);
-            print('marina');
+            print('seiam');
             emit(ShopSuccessGetOrderState());
         }).
         catchError((error)
@@ -299,7 +299,20 @@ class ShopCubit extends Cubit<ShopStates>
       double ? total=0;
     void PlusCounter(ProductModel product)
     {
-       product.quantity += 1;
-       emit(ShopChangeCounterState());
+      if(product.quantity>=1)
+      {
+        product.quantity += 1;
+      }
+       emit(ShopChangeCounterPlusState());
     }
+
+  void MinusCounter(ProductModel product)
+  {
+    if (product.quantity>1)
+    {
+      product.quantity -= 1;
+    }
+
+    emit(ShopChangeCounterMinusState());
+  }
 }

@@ -4,6 +4,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test/layout/shop_layout.dart';
 import 'package:test/modules/login/login_cubit/cubit.dart';
+import 'package:test/modules/login/shop_login.dart';
 import 'package:test/modules/reagister_screen/register_cubit/cubit.dart';
 import 'package:test/modules/reagister_screen/register_cubit/states.dart';
 import 'package:test/shared/components/component.dart';
@@ -37,7 +38,7 @@ class ShopRegisterScreen extends StatelessWidget {
                 token = state.loginModel.data?.token;
                 navigateAndFinish(
                   context,
-                  ShopLayout(),
+                  ShopLogin(),
                 );});
             } else {
               //if login failed

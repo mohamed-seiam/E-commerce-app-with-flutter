@@ -62,6 +62,11 @@ class ShopLogin extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Image(
+                            image: 
+                            AssetImage('assets/img/login.png'),
+                        ),
+                        SizedBox(height: 10.0,),
                         Text(
                           "LOGIN",
                           style: Theme.of(context)

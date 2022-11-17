@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test/cubit/cubit.dart';
 import 'package:test/cubit/states.dart';
 import 'package:test/models/categories_models.dart';
+import 'package:test/models/get_cart_model.dart';
 import 'package:test/models/home_model.dart';
 import 'package:test/modules/Product_Details_Screen/product_details_screen.dart';
 import 'package:test/shared/components/component.dart';
@@ -44,7 +45,7 @@ class ProductsScreen extends StatelessWidget {
       children:
       [
         CarouselSlider(
-          items: model.data?.banners.map((e) =>
+          items: model.data?.banners?.map((e) =>
             Image(
               image: NetworkImage('${e.image}',),
               errorBuilder: (context, error, stackTrace) => Icon(Icons.error),
@@ -115,32 +116,33 @@ class ProductsScreen extends StatelessWidget {
             mainAxisSpacing: 1.0,
             crossAxisSpacing: 1.0,
             childAspectRatio: 1/1.57,
-            children: List.generate(model.data!.products.length,
-                    (index) =>buildGridProduct(model.data!.products[index],context,index)),
+            children: List.generate(model.data!.products!.length,
+                    (index) =>buildGridProduct(model.data!.products![index],context,index)),
           ),
         ),
       ],
     ),
   );
 
-    Widget buildGridProduct(ProductsModel model,context,index) =>  Container(
+    Widget buildGridProduct(ProductsModel productsModel,context,index) =>  Container(
       color: Colors.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           GestureDetector(
             onTap: (){
-              navigateTo(context, ProductDetailsScreen(index));
+              navigateTo(context, ProductDetailsScreen(index, productsModel:productsModel));
             },
             child: Stack(
               alignment: AlignmentDirectional.bottomStart,
               children: [
                 Image(
-                  image: NetworkImage(model.image.toString()),
+                  image: NetworkImage(productsModel.image.toString()),
                   width: double.infinity,
                   height: 200,
+                  errorBuilder: (context, error, stackTrace) => Icon(Icons.error),
                 ),
-                if(model.discount != 0 )
+                if(productsModel.discount != 0 )
                 Container(
                   color: Colors.red,
                   padding: EdgeInsets.symmetric(horizontal: 5.0),
@@ -161,7 +163,7 @@ class ProductsScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                    model.name!,
+                    productsModel.name!,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -173,16 +175,16 @@ class ProductsScreen extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      "${model.price.round()}",
+                      "${productsModel.price.round()}",
                       style: TextStyle(
                           fontSize: 12.0,
                         color: defaultColor,
                       ),
                     ),
                     SizedBox(width: 5.0,),
-                    if(model.discount != 0 )
+                    if(productsModel.discount != 0 )
                       Text(
-                      "${model.oldPrice.round()}",
+                      "${productsModel.oldPrice.round()}",
                       style: TextStyle(
                         fontSize: 10.0,
                         color: Colors.grey,
@@ -193,11 +195,11 @@ class ProductsScreen extends StatelessWidget {
                     IconButton(
                         onPressed: ()
                         {
-                          ShopCubit.get(context).ChangeFavorites(model.id);
+                          ShopCubit.get(context).ChangeFavorites(productsModel.id);
                         },
                         icon:CircleAvatar(
                           radius: 15.0,
-                          backgroundColor: ShopCubit.get(context).favorites[model.id]! ? defaultColor : Colors.grey,
+                          backgroundColor: ShopCubit.get(context).favorites[productsModel.id]! ? defaultColor : Colors.grey,
                           child: Icon(Icons.favorite_border,
                             size: 14.0,
                             color: Colors.white,
@@ -205,16 +207,16 @@ class ProductsScreen extends StatelessWidget {
                         ),
                     ),
                     SizedBox(width: 10.0,),
-                    if(ShopCubit.get(context).carts[model.id!]!=null)
+                    if(ShopCubit.get(context).carts[productsModel.id!]!=null)
                     IconButton(
                       onPressed: ()
                       {
-                        ShopCubit.get(context).changeCarts(model.id);
+                        ShopCubit.get(context).changeCarts(productsModel.id);
                       },
 
                       icon:CircleAvatar(
                         radius: 15.0,
-                        backgroundColor: ShopCubit.get(context).carts[model.id!]! ? defaultColor : Colors.grey,
+                        backgroundColor: ShopCubit.get(context).carts[productsModel.id!]! ? defaultColor : Colors.grey,
                         child: Icon(Icons.shopping_cart_sharp,
                           size: 14.0,
                           color: Colors.white,
@@ -243,6 +245,7 @@ class ProductsScreen extends StatelessWidget {
             width: 100.0,
             height: 100.0,
             fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) => Icon(Icons.error),
           ),
           Container(
             color: Colors.black.withOpacity(.8,),

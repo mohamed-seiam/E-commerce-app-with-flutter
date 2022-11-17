@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => ShopCubit()..getHomeData()..getCategoriesData()..getFavoritesData()..getUserData()..getCartsData()..GetOrders(),
+      create: (BuildContext context) => ShopCubit()..getHomeData()..getCategoriesData()..getFavoritesData()..getUserData()..getCartsData(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Shop App',
@@ -66,14 +66,15 @@ class MyApp extends StatelessWidget {
           // ignore: prefer_const_constructors
           appBarTheme: AppBarTheme(
             titleSpacing: 20.0,
+            centerTitle: true,
             backwardsCompatibility: false,
             systemOverlayStyle: SystemUiOverlayStyle(
               statusBarColor: Colors.white,
               statusBarIconBrightness: Brightness.dark,
             ),
             titleTextStyle: TextStyle(
-              color: Colors.black,
-              fontSize: 25.0,
+              color: Colors.blue,
+                fontSize: 25.0,
               fontWeight: FontWeight.bold,
             ),
             backgroundColor: Colors.white,

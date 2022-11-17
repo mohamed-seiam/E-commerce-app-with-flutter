@@ -35,18 +35,23 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   List<BoardingModel> boarding = [
     BoardingModel(
       image: "assets/img/shopping.png",
-      Title: "On Board1 Title",
-      Body: "On Board1 body",
+      Title: "Let\'s Make a Short Shopping tour ",
+      Body: "Why go shopping if you can shop from your home?",
     ),
     BoardingModel(
-      image: "assets/img/shopping.png",
-      Title: "On Board2 Title",
-      Body: "On Board2 body",
+      image: "assets/img/webshopping.png",
+      Title: "Shop safely",
+      Body: "In light of the Corona virus, shopping outside is not safe",
     ),
     BoardingModel(
-      image: "assets/img/shopping.png",
-      Title: "On Board3 Title",
-      Body: "On Board3 body",
+      image: "assets/img/packagearrived.png",
+      Title: "Speed and ease are our goal",
+      Body: "We will deliver your order to you as quickly as possible and with the best quality",
+    ),
+    BoardingModel(
+      image: "assets/img/succsesful.png",
+      Title: "We have all payment methods",
+      Body: "Our goal is to make it easier for our customers in every possible way",
     ),
   ];
 

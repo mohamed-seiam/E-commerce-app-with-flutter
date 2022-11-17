@@ -31,17 +31,20 @@ class CartScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    "you Don\'t have add any Products To your Cart yet!",
+                  Image(
+                    image:AssetImage('assets/img/addtocart.png'),
                   ),
                   SizedBox(
                     height: 30,
                   ),
-                  Icon(
-                    Icons.remove_shopping_cart_outlined,
-                    size: 40.0,
-                    color: Colors.red,
+
+                  Text(
+                    "you Don\'t have add any Products To your Cart yet!",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
+
                 ],
               ),
             ),
@@ -80,7 +83,7 @@ class CartScreen extends StatelessWidget {
                         width: 300.0,
                         isUpperCase: true,
                         background: Colors.blue),
-                    SizedBox(height: 30.0,),
+                    SizedBox(height: 20.0,),
                     defultButton(
                       function: () {
                         ShopCubit.get(context).UpdateOrders();
@@ -92,7 +95,8 @@ class CartScreen extends StatelessWidget {
                       width: 300.0,
                       isUpperCase: true,
                       background: Colors.green,
-                    )
+                    ),
+                    SizedBox(height: 5.0,),
                   ]),
             ),
           ),
@@ -117,6 +121,7 @@ class CartScreen extends StatelessWidget {
                         image: NetworkImage(model.image.toString()),
                         width: 120.0,
                         height: 120.0,
+                        errorBuilder: (context, error, stackTrace) => Icon(Icons.error),
                       ),
                       if (model.discount != 0)
                         Container(
@@ -151,25 +156,31 @@ class CartScreen extends StatelessWidget {
                         Spacer(),
                         Row(
                           children: [
-                            Text(
-                              '${model.price} LE',
-                              style: TextStyle(
-                                fontSize: 15.0,
-                                color: Colors.black,
-                              ),
+                            Column(
+                              children: [
+                                Text(
+                                  '${model.price} LE',
+                                  style: TextStyle(
+                                    fontSize: 15.0,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                SizedBox(height:5.0 ,),
+                                if (model.discount != 0)
+                                  Text(
+                                    '${model.oldPrice} LE',
+                                    style: TextStyle(
+                                        fontSize: 12.0,
+                                        color: Colors.grey[700],
+                                        decoration: TextDecoration.lineThrough),
+                                  ),
+                              ],
                             ),
                             SizedBox(
                               width: 3.0,
                             ),
-                            if (model.discount != 0)
-                              Text(
-                                '${model.oldPrice} LE',
-                                style: TextStyle(
-                                    fontSize: 12.0,
-                                    color: Colors.grey[700],
-                                    decoration: TextDecoration.lineThrough),
-                              ),
-                            Spacer(),
+
+                             Spacer(),
                             IconButton(
                                 icon: CircleAvatar(
                                   radius: 25.0,
@@ -188,15 +199,24 @@ class CartScreen extends StatelessWidget {
                                   ShopCubit.get(context).changeCarts(model.id!);
                                   // print(ShopCubit.get(context).getCartModel.data?.cartItems[index]?.id;
                                 }),
+                                    SizedBox(width: 3.0,),
+                            IconButton(
+                              onPressed:(){
+                                ShopCubit.get(context).MinusCounter(model);
+                              },
+                              icon:Icon(Icons.remove),
+                            ),
+                                 SizedBox(width: 5.0,),
+                                    Text(
+                                      "${model.quantity}",
+                                   ),
+
                             IconButton(
                                 onPressed:(){
                                   ShopCubit.get(context).PlusCounter(model);
                                 },
                                 icon:Icon(Icons.add),
-                            ),
-                            Text(
-                              "${model.quantity}",
-                            ),
+                            )
                           ],
                         ),
                       ],
